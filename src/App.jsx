@@ -10,11 +10,17 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   //　ポケモンのデータ用
   const [pokemons, setPokemons] = useState([]);
+  // 次のポケモンデータ
+  const [nextPokemon, setNextPokemon] = useState("")
+
+
   useEffect(() => {
     const fecthPokemonData = async () => {
       let res = await getAllPokemon(url);
       getPokemon(res.results);
       setLoading(false);
+      // console.log(res)
+      setNextPokemon(res.next);
     };
     fecthPokemonData();
   }, []);
@@ -27,7 +33,16 @@ const App = () => {
     );
     setPokemons(pokemonData);
   };
-  console.log(pokemons);
+  // console.log(pokemons);
+
+  const nextPage = async () => {
+    setLoading(true)
+    let data = await getAllPokemon(nextPokemon);
+    // console.log(data)
+    await getPokemon(data.results);
+    setLoading(false)
+
+  }
 
   return (
     <>
@@ -41,6 +56,10 @@ const App = () => {
             {pokemons.map((pokemon, i) => (
               <Card key={i} pokemon={pokemon} />
             ))}
+          </div>
+          <div className="btn">
+            <button>前へ</button>
+            <button onClick={nextPage}>次へ</button>
           </div>
         </>
       )}
