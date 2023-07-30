@@ -11,7 +11,7 @@ const App = () => {
   //　ポケモンのデータ用
   const [pokemons, setPokemons] = useState([]);
   // 次のポケモンデータ
-  const [nextPokemon, setNextPokemon] = useState("")
+  const [nextUrl, setNextUrl] = useState("")
 
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const App = () => {
       getPokemon(res.results);
       setLoading(false);
       // console.log(res)
-      setNextPokemon(res.next);
+      setNextUrl(res.next);
     };
     fecthPokemonData();
   }, []);
@@ -37,9 +37,11 @@ const App = () => {
 
   const nextPage = async () => {
     setLoading(true)
-    let data = await getAllPokemon(nextPokemon);
+    let data = await getAllPokemon(nextUrl);
     // console.log(data)
     await getPokemon(data.results);
+    //更に次のページに行くためにURLを更新する
+    setNextUrl(data.next);
     setLoading(false)
 
   }
