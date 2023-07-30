@@ -1,0 +1,13 @@
+.card {
+  width: 200px;
+  border-radius: 3px;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
+  background-color: white;
+  //名前
+  &Name{
+    padding: 0;
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+}
